@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>Vijay — Submission to Karan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --color-bg: #18181B; 
+            --color-text: #FAFAFA; 
+            --color-text-secondary: #D4D4D8;
+            --color-text-muted: #A1A1AA;
+            --color-accent-1: #F97316;
+            --color-accent-2: #14B8A6;
+            --color-accent-3: #FEF3C7;
+            --color-accent-green: #22C55E;
+        }
+        
+        *, *::before, *::after { 
+            box-sizing: border-box; 
+        }
+        
+        html, body { 
+            background: #18181B; 
+            margin: 0; 
+            overflow: hidden; 
+            height: 100vh; 
+            width: 100vw; 
+        }
+        
+        body { 
+            font-family: "DM Sans", sans-serif; 
+            color: #FAFAFA; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .grad-text {
+            background: linear-gradient(to right, #F97316, #FEF3C7, #14B8A6);
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+        }
+
+        @keyframes blob1 { 
+            0%, 100% { transform: translate(0, 0) scale(1); } 
+            50% { transform: translate(50px, -50px) scale(1.1); } 
+        }
+        
+        @keyframes blob2 { 
+            0%, 100% { transform: translate(0, 0); } 
+            50% { transform: translate(-45px, 35px); } 
+        }
+        
+        @keyframes blob3 { 
+            0%, 100% { transform: translate(0, 0) scale(1); } 
+            50% { transform: translate(30px, 40px) scale(0.9); } 
+        }
+        
+        .blob { 
+            position: absolute; 
+            border-radius: 50%; 
+            filter: blur(90px); 
+        }
+        
+        .b1 { animation: blob1 12s ease-in-out infinite; }
+        .b2 { animation: blob2 16s ease-in-out infinite; }
+        .b3 { animation: blob3 20s ease-in-out infinite; }
+
+        @keyframes fadeUp { 
+            from { opacity: 0; transform: translateY(14px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .r1 { opacity: 0; animation: fadeUp 0.4s ease 0.05s forwards; }
+        .r2 { opacity: 0; animation: fadeUp 0.4s ease 0.12s forwards; }
+        .r3 { opacity: 0; animation: fadeUp 0.4s ease 0.20s forwards; }
+        .r4 { opacity: 0; animation: fadeUp 0.4s ease 0.30s forwards; }
+        .r5 { opacity: 0; animation: fadeUp 0.4s ease 0.38s forwards; }
+        .r6 { opacity: 0; animation: fadeUp 0.4s ease 0.46s forwards; }
+        .r7 { opacity: 0; animation: fadeUp 0.4s ease 0.55s forwards; }
+        .r8 { opacity: 0; animation: fadeUp 0.4s ease 0.64s forwards; }
+
+        .mouse-spotlight {
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            pointer-events: none;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-family: "DM Sans", sans-serif;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        @keyframes barGrow { 
+            from { width: 0%; } 
+            to { width: var(--w); } 
+        }
+        
+        .bar-fill {
+            height: 6px; 
+            border-radius: 4px;
+            animation: barGrow 1s ease 0.8s forwards;
+            width: 0%;
+        }
+
+        .stat-num {
+            font-family: "Archivo Black", sans-serif;
+            font-size: clamp(18px, 2vw, 24px);
+            line-height: 1;
+        }
+
+        .email-window {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        
+        .email-titlebar {
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .email-body { 
+            padding: 16px 20px; 
+        }
+
+        .divider { 
+            border: none; 
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            margin: 10px 0; 
+        }
+
+        .hover-card { 
+            transition: transform 0.25s ease, box-shadow 0.25s ease; 
+            cursor: default; 
+        }
+        
+        .hover-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); 
+        }
+    </style>
+</head>
+<body>
+
+<div class="mouse-spotlight"></div>
+
+<!-- Gradient mesh -->
+<div style="position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;">
+    <div class="blob b1" style="width: 480px; height: 480px; top: -120px; right: -100px; background: #F97316; opacity: 0.07;"></div>
+    <div class="blob b2" style="width: 360px; height: 360px; bottom: -90px; left: -70px; background: #14B8A6; opacity: 0.05;"></div>
+    <div class="blob b3" style="width: 220px; height: 220px; top: 35%; left: 12%; background: #FEF3C7; opacity: 0.04;"></div>
+</div>
+
+<!-- Wrapper -->
+<div style="position: relative; z-index: 2; width: 100%; max-width: 1120px; padding: 24px 52px;">
+
+    <!-- Top header row -->
+    <div class="r1" style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+        <span style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 6px; color: #A1A1AA;">CoS Application · United Global Supply LLC</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #52525B; letter-spacing: 2px; text-transform: uppercase;">Dover, Delaware · Founded Dec 2023</span>
+    </div>
+
+    <!-- 3-column grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1.55fr 1fr; gap: 16px; align-items: start;">
+
+        <!-- ═══ COL 1 — Sender Identity ═══ -->
+        <div>
+            <h2 class="grad-text r2" style="font-family: 'Archivo Black', sans-serif; font-size: clamp(20px, 2.2vw, 28px); margin: 0 0 2px; line-height: 1.1;">Vijay Satya<br>Prakash</h2>
+            <p class="r2" style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #71717A; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 14px;">Chief of Staff · Bengaluru</p>
+
+            <!-- Proof points -->
+            <div class="r3" style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #F97316; flex-shrink: 0; margin-top: 4px;"></span>
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.5;">Built <strong style="color: #FAFAFA;">Credfix GTM from zero</strong> — positioning, pipeline, CRM, client acquisition</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #14B8A6; flex-shrink: 0; margin-top: 4px;"></span>
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.5;">Ran <strong style="color: #FAFAFA;">5 verticals simultaneously</strong> for US founder, Melody Mocktail (Tampa, FL)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #FEF3C7; flex-shrink: 0; margin-top: 4px;"></span>
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.5;">Interior design household — <strong style="color: #FAFAFA;">furniture trade native</strong>, vendor cycles, sourcing</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #22C55E; flex-shrink: 0; margin-top: 4px;"></span>
+                    <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.5;"><strong style="color: #FAFAFA;">Circular + systems thinker</strong> across all 3 UGS brands</span>
+                </div>
+            </div>
+
+            <!-- Progress bars -->
+            <div class="r4" style="display: flex; flex-direction: column; gap: 10px;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span style="font-size: 10px; color: #A1A1AA; text-transform: uppercase; letter-spacing: 1px;">B2B Outbound</span>
+                        <span style="font-size: 10px; color: #F97316; font-weight: 700;">95%</span>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.07); border-radius: 4px; height: 6px;">
+                        <div class="bar-fill" style="--w: 95%; background: linear-gradient(to right, #F97316, #FEF3C7);"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span style="font-size: 10px; color: #A1A1AA; text-transform: uppercase; letter-spacing: 1px;">GTM Build (0→1)</span>
+                        <span style="font-size: 10px; color: #14B8A6; font-weight: 700;">90%</span>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.07); border-radius: 4px; height: 6px;">
+                        <div class="bar-fill" style="--w: 90%; background: linear-gradient(to right, #14B8A6, #22C55E);"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span style="font-size: 10px; color: #A1A1AA; text-transform: uppercase; letter-spacing: 1px;">E-Commerce Ops</span>
+                        <span style="font-size: 10px; color: #FEF3C7; font-weight: 700;">88%</span>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.07); border-radius: 4px; height: 6px;">
+                        <div class="bar-fill" style="--w: 88%; background: linear-gradient(to right, #FEF3C7, #F97316);"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span style="font-size: 10px; color: #A1A1AA; text-transform: uppercase; letter-spacing: 1px;">Systems Thinking</span>
+                        <span style="font-size: 10px; color: #22C55E; font-weight: 700;">92%</span>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.07); border-radius: 4px; height: 6px;">
+                        <div class="bar-fill" style="--w: 92%; background: linear-gradient(to right, #22C55E, #14B8A6);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ COL 2 — Email Submission Card ═══ -->
+        <div class="email-window r5">
+            <!-- Title bar -->
+            <div class="email-titlebar">
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: #FF5F57; display: block;"></span>
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: #FFBD2E; display: block;"></span>
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: #28CA41; display: block;"></span>
+                <span style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #71717A; margin-left: 8px; letter-spacing: 1px;">New Message</span>
+                <span style="margin-left: auto; font-family: 'DM Sans', sans-serif; font-size: 9px; color: #52525B; text-transform: uppercase; letter-spacing: 1px;">Sending to Karan</span>
+            </div>
+
+            <div class="email-body">
+                <p style="font-family: 'Archivo Black', sans-serif; font-size: clamp(13px, 1.5vw, 17px); color: #FAFAFA; margin: 0 0 3px; line-height: 1.2;">Chief of Staff — Execution Plan<br>for United Global Supply</p>
+                <p style="font-family: 'DM Sans', sans-serif; font-size: 10px; color: #71717A; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 10px;">From: Vijay Satya Prakash</p>
+
+                <hr class="divider">
+
+                <p style="font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: #D4D4D8; line-height: 1.7; margin: 0 0 10px;">Hi Karan, I've mapped your three revenue problems across Hotel Supply, Furniture, and Solar — and attached proof that I've already solved each one.</p>
+
+                <!-- 4 bullet points -->
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 11px; margin-top: 1px; flex-shrink: 0;">🏨</span>
+                        <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.55;">Hotel outbound reply rate <strong style="color: #F97316;">3% → 8–10%</strong> in 60 days. Conversion <strong style="color: #F97316;">1.5% → 3–4%</strong> via rebuilt Instantly.ai cadence + RFQ on WooCommerce</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 11px; margin-top: 1px; flex-shrink: 0;">🪑</span>
+                        <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.55;">Furniture AOV <strong style="color: #FEF3C7;">$120 → $160</strong> via bundles. Klaviyo + WhatsApp cart recovery → <strong style="color: #FEF3C7;">+10–15% revenue lift</strong>, zero new ad spend</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 11px; margin-top: 1px; flex-shrink: 0;">☀️</span>
+                        <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.55;">Solar: Shopify live → first 10 commercial accounts → <strong style="color: #14B8A6;">full B2B GTM built from zero</strong> — same playbook I ran at Credfix</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span style="font-size: 11px; margin-top: 1px; flex-shrink: 0;">⚡</span>
+                        <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #D4D4D8; line-height: 1.55;">Weekly dashboard (Leads · CAC · Conversion · Revenue) + &lt;72hr execution → <strong style="color: #22C55E;">30–40% of your time freed</strong> from day one</span>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <p style="font-family: 'DM Sans', sans-serif; font-size: 10.5px; color: #A1A1AA; line-height: 1.65; margin: 0 0 10px;">Every number above is something I've proven before — not a projection. I'm not applying to manage tasks. I'm applying to <strong style="color: #FAFAFA;">own all three brands operationally</strong> so you can focus on the portfolio.</p>
+
+                <div style="background: linear-gradient(to right, rgba(249, 115, 22, 0.10), rgba(20, 184, 166, 0.08)); border: 1px solid rgba(249, 115, 22, 0.22); border-radius: 9px; padding: 9px 16px; text-align: center;">
+                    <p class="grad-text" style="font-family: 'Archivo Black', sans-serif; font-size: clamp(11px, 1.2vw, 13px); margin: 0;">"Three brands. One portfolio. One CoS. I'm ready to own it."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ COL 3 — Impact Numbers ═══ -->
+        <div>
+            <p class="r6" style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 5px; color: #A1A1AA; margin: 0 0 10px;">Expected Impact</p>
+
+            <!-- Big stat cards -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+
+                <div class="card hover-card r6" style="border-left: 3px solid #F97316;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #F97316;">+30–50%</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">Revenue Growth</div>
+                        </div>
+                        <span class="pill" style="background: rgba(249, 115, 22, 0.12); border: 1px solid rgba(249, 115, 22, 0.25); color: #F97316;">90 days</span>
+                    </div>
+                </div>
+
+                <div class="card hover-card r6" style="border-left: 3px solid #14B8A6;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #14B8A6;">-20–30%</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">CAC Reduction</div>
+                        </div>
+                        <span class="pill" style="background: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.25); color: #14B8A6;">30 days</span>
+                    </div>
+                </div>
+
+                <div class="card hover-card r7" style="border-left: 3px solid #FEF3C7;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #FEF3C7;">+40–60%</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">Qualified Leads</div>
+                        </div>
+                        <span class="pill" style="background: rgba(254, 243, 199, 0.10); border: 1px solid rgba(254, 243, 199, 0.20); color: #FEF3C7;">60 days</span>
+                    </div>
+                </div>
+
+                <div class="card hover-card r7" style="border-left: 3px solid #FEF3C7;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #FEF3C7;">$120→$160</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">Furniture AOV</div>
+                        </div>
+                        <span class="pill" style="background: rgba(254, 243, 199, 0.10); border: 1px solid rgba(254, 243, 199, 0.20); color: #FEF3C7;">30 days</span>
+                    </div>
+                </div>
+
+                <div class="card hover-card r7" style="border-left: 3px solid #22C55E;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #22C55E;">-30–40%</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">Founder Time Saved</div>
+                        </div>
+                        <span class="pill" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.25); color: #22C55E;">30 days</span>
+                    </div>
+                </div>
+
+                <div class="card hover-card r8" style="border-left: 3px solid #F97316;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="stat-num" style="color: #F97316;">&lt;72 hrs</div>
+                            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #A1A1AA; margin-top: 2px;">Decision → Execution</div>
+                        </div>
+                        <span class="pill" style="background: rgba(249, 115, 22, 0.12); border: 1px solid rgba(249, 115, 22, 0.25); color: #F97316;">Always</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('mousemove', (e) => {
+    const s = document.querySelector('.mouse-spotlight');
+    if (s) s.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(249, 115, 22, 0.05), transparent 40%)`;
+});
+
+// Animate bar fills on load
+window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach((bar, i) => {
+        const w = bar.style.getPropertyValue('--w');
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.transition = `width 0.9s ease ${0.8 + i * 0.1}s`;
+            bar.style.width = w;
+        }, 100);
+    });
+});
+</script>
+</body>
+</html>
